@@ -8,20 +8,27 @@ import Hamburger from "hamburger-react";
 const navComponents = [
   { title: "HOME", id: 1, scroll: "/" },
   {
-    title: "SERVICES",
+    title: "PRODUCTS",
     id: 2,
     list: [
       { id: 1, title: "ROV Jaladuta" },
       { id: 2, title: "ROV Jalasimha" },
     ],
   },
-  { title: "GALLERY", id: 3, scroll: "/gallery" },
-  { title: "CONTACT US", id: 4, scroll: "/#contact" },
+  { title: "SERVICES", id: 3, scroll: "/services" },
+  { title: "GALLERY", id: 4, scroll: "/gallery" },
+  { title: "CONTACT US", id: 5, scroll: "/#contact" },
 ];
 
 function Navbar() {
   const [navbar, setNavbar] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [activeLink, setActiveLink] = useState("/"); // State to track the active link
+
+  const handleLinkClick = (scroll) => {
+    setActiveLink(scroll);
+    setNavbar(false);
+  };
   return (
     <>
       <style>{`
@@ -42,17 +49,17 @@ function Navbar() {
     `}</style>
       <nav className="md:flex justify-between items-center z-30 fixed w-full h-[68px] bg-black top-0">
         <div className="flex justify-between items-center">
-          <a href="/">
+          <Link href="/">
             <Image
               src="https://res.cloudinary.com/dgjzygzgx/image/upload/v1702608372/logo_q5m0jp.png"
               alt="coratia"
               height={"300"}
               width={"300"}
               loading="eager"
-              className="cursor-pointer h-14 w-auto ml-4 sm:ml-12 md:mt-0 mt-3"
-
+              className="cursor-pointer h-12 sm:h-14 w-auto ml-4 sm:ml-12 md:mt-0 mt-3"
+              style={{ filter: "contrast(1.5)" }}
             />
-          </a>
+          </Link>
           <span className="md:hidden relative px-4">
             <Hamburger
               toggled={navbar}
@@ -68,28 +75,32 @@ function Navbar() {
         >
           {navComponents.map((navComponent, index) =>
             index === 1 ? (
-              <li key={navComponent.id}>
-                <div className="w-full my-14 md:my-0 text-center">
+              <li
+                key={navComponent.id}
+                onMouseOver={() => {
+                  setDropdownVisible(true);
+                }}
+                onMouseOut={() => {
+                  setDropdownVisible(false);
+                }}
+              >
+                <div className="w-full my-14 md:my-0 text-center md:text-left">
                   <button
-                    onFocus={() => {
-                      setDropdownVisible(true);
-                    }}
-                    onBlur={() => {
-                      setTimeout(() => {
-                        setDropdownVisible(false);
-                      }, 200);
-                    }}
-                    className="text-white text-sm font-normal md:py-6 md:px-5 font-nidus hover:text-cyan-600 focus:outline-none"
+                    className={`text-white text-sm font-normal md:py-6 md:px-5 font-nidus hover:text-cyan-600 transition focus:outline-none ${
+                      activeLink === navComponent.scroll ? "!text-cyan-600" : ""
+                    }`}
                   >
                     {navComponent.title}
                   </button>
 
                   {dropdownVisible && (
-                    <div className="dropdown md:absolute sm:block mt-2 bg-black p-2 shadow-md">
-                      {navComponent.list.map((product) => (
+                    <div className="dropdown md:absolute sm:block bg-black p-2 shadow-md">
+                      {navComponent.list.map((product, index) => (
                         <Link
+                          key={index}
                           onClick={() => {
                             if (navbar) setNavbar((navbar) => !navbar);
+                            handleLinkClick(navComponent.scroll);
                           }}
                           href={`/product/${product.id}`}
                           className="block px-4 py-2 text-white hover:text-cyan-600 transition"
@@ -104,15 +115,17 @@ function Navbar() {
             ) : index === navComponents.length - 1 ? (
               <li key={navComponent.id}>
                 <div className="w-full my-14 md:my-0 text-center">
-                  <a
+                  <Link
                     onClick={() => {
                       if (navbar) setNavbar((navbar) => !navbar);
                     }}
                     href={navComponent.scroll}
-                    className="text-white bg-[#1ca9c9] text-sm font-normal md:py-6 py-2 px-5 font-nidus hover:text-black"
+                    className={`text-white bg-[#1ca9c9] text-sm font-normal md:py-6 py-2 px-5 font-nidus hover:text-black transition ${
+                      activeLink === navComponent.scroll ? "!text-white" : ""
+                    }`}
                   >
                     {navComponent.title}
-                  </a>
+                  </Link>
                 </div>
               </li>
             ) : (
@@ -121,9 +134,12 @@ function Navbar() {
                   <Link
                     onClick={() => {
                       if (navbar) setNavbar((navbar) => !navbar);
+                      handleLinkClick(navComponent.scroll);
                     }}
                     href={navComponent.scroll}
-                    className="text-white text-sm font-normal md:py-6 md:px-5 font-nidus hover:text-cyan-600"
+                    className={`text-white text-sm font-normal md:py-6 md:px-5 font-nidus hover:text-cyan-600 ${
+                      activeLink === navComponent.scroll ? "!text-cyan-600" : ""
+                    }`}
                   >
                     {navComponent.title}
                   </Link>

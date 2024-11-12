@@ -5,7 +5,8 @@ import HashLoader from "react-spinners/HashLoader";
 import Image from "next/image";
 import "./Hero.css";
 
-const herovideo = "https://res.cloudinary.com/dq9gdlbls/video/upload/f_auto:video,q_auto/herovid_bkrsqb";
+const herovideo =
+  "https://res.cloudinary.com/dq9gdlbls/video/upload/f_auto:video,q_auto/herovid_bkrsqb";
 
 export function HeroText() {
   return (
@@ -13,10 +14,9 @@ export function HeroText() {
       <h1
         style={{
           fontSize: "6.8vw",
-          lineHeight: "35vh",
           mixBlendMode: "multiply",
         }}
-        className="  bg-black text-white md:mt-10 w-[100%] text-center font-extrabold"
+        className="transText bg-black text-white md:mt-24 w-[100%] text-center font-extrabold"
       >
         {herocontent.text}
       </h1>
@@ -48,24 +48,24 @@ export default function Hero() {
   return (
     <>
       <div className="hero-section w-full max-w-full overflow-hidden">
-        <video 
+        <video
           width={1080}
           height={720}
           autoPlay
           muted
           loop
-          className="hero-image fixed object-cover w-full max-w-full h-[550px] -z-20 overflow-hidden"
+          className="hero-image fixed object-cover w-full max-w-full h-[630px] mt-[60px] -z-20 overflow-hidden"
         >
           <source src={herovideo} type="video/webm" />
         </video>
 
-        <div className="hero-child absolute w-full top-[220px] sm:top-[240px] z-0">
+        <div className="hero-child absolute w-full top-[320px] sm:top-[240px] z-0">
           <div className="hero-wrapper relative w-[700px] mx-auto">
             <p
               className="drop-1 hero-text mx-auto text-center p-3 
                 font-bold text-white text-6xl"
             >
-              Revolutionizing Underwater Inspection with Robots
+              Revolutionizing Underwater Inspection using Robots
             </p>
 
             <div className="drop-2">
@@ -73,8 +73,8 @@ export default function Hero() {
                 href={herocontent.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-[225px] sm:w-[260px] h-[52px] p-3 mx-auto text-center
-               text-white btn text-base sm:mt-7 rounded-full font-semibold bg-slate-900
+                className="flex items-center w-[225px] sm:w-[260px] h-[52px] p-3 mx-auto text-center
+                text-white btn text-base mt-4 sm:mt-7 rounded-full font-semibold bg-slate-900
                 transition hover:bg-slate-800"
               >
                 <Image
@@ -83,7 +83,7 @@ export default function Hero() {
                   width={28}
                   height={28}
                   loading="eager"
-                  className="mr-2.5 w-[28px] h-[28px]"
+                  className="mr-2 w-[28px] h-[28px]"
                 />
                 Enhance Your Experience
               </Link>
